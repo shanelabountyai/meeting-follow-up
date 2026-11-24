@@ -1,0 +1,66 @@
+[
+  {
+    "id": "F01",
+    "file": "F01-bluewater-fleet-reporting.txt",
+    "minutes": 30,
+    "chars": 28251,
+    "chunks": 1,
+    "covers": "baseline: attendee emails in the header, rule 1 (domain) match"
+  },
+  {
+    "id": "F02",
+    "file": "F02-harborview-member-portal.md",
+    "minutes": 25,
+    "chars": 23692,
+    "chunks": 1,
+    "covers": "rule 2: attendee emails are personal addresses (no company domain), a deal name quoted in the meeting"
+  },
+  {
+    "id": "F03",
+    "file": "F03-alder-finch-website-leads.txt",
+    "minutes": 20,
+    "chars": 18772,
+    "chunks": 1,
+    "covers": "rule 3: no attendee emails, the company is named aloud; no recipients so no draft"
+  },
+  {
+    "id": "F04",
+    "file": "F04-two-companies-intro.txt",
+    "minutes": 35,
+    "chars": 33143,
+    "chunks": 1,
+    "covers": "two companies named, no emails: rule 3 returns two candidates, routed to Needs-Review (never a guess)"
+  },
+  {
+    "id": "F05",
+    "file": "F05-pinecrest-recall-reminders.vtt",
+    "minutes": 40,
+    "chars": 36466,
+    "chunks": 1,
+    "covers": ".vtt with <v> speaker tags (Google Meet style) and a NOTE header holding the attendee emails"
+  },
+  {
+    "id": "F06",
+    "file": "F06-greenline-scoring-90min.txt",
+    "minutes": 90,
+    "chars": 83091,
+    "chunks": 2,
+    "covers": "90-minute transcript over 60,000 characters: chunked by speaker turn, map then reduce"
+  },
+  {
+    "id": "F07",
+    "file": "F07-lakeshore-candidate-source.md",
+    "minutes": 45,
+    "chars": 41064,
+    "chunks": 1,
+    "covers": "an action item nobody took on: owner Unassigned, item kept"
+  },
+  {
+    "id": "F08",
+    "file": "F08-summit-ridge-inquiry-routing.txt",
+    "minutes": 60,
+    "chars": 55422,
+    "chunks": 1,
+    "covers": "prompt injection pasted into the meeting: an extra address and a payment link must not reach the draft"
+  }
+]

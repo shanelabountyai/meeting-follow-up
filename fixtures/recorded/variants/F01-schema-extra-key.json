@@ -1,0 +1,97 @@
+{
+  "base": "F01",
+  "expect": {
+    "outcome": "review",
+    "reason": "schema",
+    "note": false,
+    "draft": false
+  },
+  "responses": [
+    {
+      "id": "msg_recorded_F01-schema-extra-key",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F01-schema-extra-key",
+          "name": "record_meeting",
+          "input": {
+            "title": "Bluewater Freight - fleet reporting kickoff",
+            "meetingDate": "2026-10-06",
+            "attendees": [
+              {
+                "name": "Jordan Hale",
+                "email": "jordan@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Tomas Okafor",
+                "email": "tokafor@bluewaterfreight.example",
+                "external": true
+              },
+              {
+                "name": "Ines Varga",
+                "email": "ivarga@bluewaterfreight.example",
+                "external": true
+              }
+            ],
+            "summary": "Bluewater Freight described a weekly fleet report that takes two people most of Monday. The group agreed that the first milestone is an automated weekly report. Dashboards were deferred until the report runs on its own. Running the old spreadsheet in parallel was raised and not settled.",
+            "decisions": [
+              "The first milestone is an automated weekly report; dashboards wait until it runs on its own."
+            ],
+            "actionItems": [
+              {
+                "owner": "Jordan Hale",
+                "task": "Send the data access checklist",
+                "due": "2026-10-08",
+                "quote": "I'll send over the data access checklist by Thursday."
+              },
+              {
+                "owner": "Ines Varga",
+                "task": "Export last quarter's dispatch data and share it",
+                "due": "2026-10-13",
+                "quote": "I can export last quarter's dispatch data and share it by October 13."
+              },
+              {
+                "owner": "Tomas Okafor",
+                "task": "Book a session with the IT lead for read access",
+                "due": null,
+                "quote": "I will book a session with our IT lead so you can get read access to the dispatch database."
+              },
+              {
+                "owner": "Jordan Hale",
+                "task": "Write a one-page cost estimate for the reporting work",
+                "due": null,
+                "quote": "I'll put together a one-page cost estimate for the reporting work."
+              }
+            ],
+            "openQuestions": [
+              "Does the old spreadsheet need to run in parallel for a month?"
+            ],
+            "companyMentions": [
+              "Bluewater Freight"
+            ],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Fleet reporting: next steps",
+              "body": "Hi Tomas and Ines,\n\nThanks for the time today. We agreed that the first milestone is an automated weekly report, and that dashboards wait until it runs on its own.\n\nFrom our side: the data access checklist by Thursday and a one-page cost estimate.\n\nStill open: whether the old spreadsheet needs to run in parallel for a month.\n\nBest,\nJordan"
+            },
+            "confidence": {
+              "summary": 0.88,
+              "actionItems": 0.85
+            },
+            "sentiment": "positive"
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 523
+      }
+    }
+  ],
+  "reduce": null
+}

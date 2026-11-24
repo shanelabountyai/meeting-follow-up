@@ -1,0 +1,76 @@
+{
+  "responses": [
+    {
+      "id": "msg_recorded_F04",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F04",
+          "name": "record_meeting",
+          "input": {
+            "title": "Partner introduction call",
+            "meetingDate": "2026-10-22",
+            "attendees": [
+              {
+                "name": "Casey Moreno",
+                "email": null,
+                "external": false
+              },
+              {
+                "name": "Dana Brooks",
+                "email": null,
+                "external": true
+              },
+              {
+                "name": "Luis Ferreira",
+                "email": null,
+                "external": true
+              }
+            ],
+            "summary": "Dana Brooks introduced work across two companies, Cedar Ridge Software and Ironwood Manufacturing. Luis Ferreira described Ironwood as the larger reporting problem and Cedar Ridge as the one with a deadline. The group agreed to scope Cedar Ridge Software first and return to Ironwood in January.",
+            "decisions": [
+              "Scope Cedar Ridge Software first; come back to Ironwood in January."
+            ],
+            "actionItems": [
+              {
+                "owner": "Casey Moreno",
+                "task": "Send a scoping questionnaire for Cedar Ridge Software",
+                "due": "2026-10-23",
+                "quote": "I'll send a short scoping questionnaire for Cedar Ridge Software tomorrow."
+              },
+              {
+                "owner": "Luis Ferreira",
+                "task": "Pull the current CRM export from Ironwood Manufacturing",
+                "due": null,
+                "quote": "I'll pull the current CRM export from Ironwood Manufacturing so you can see the size of it."
+              }
+            ],
+            "openQuestions": [],
+            "companyMentions": [
+              "Cedar Ridge Software",
+              "Ironwood Manufacturing"
+            ],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Introduction call: next steps",
+              "body": "Hi Dana and Luis,\n\nThanks for the introduction. We agreed to scope Cedar Ridge Software first and to come back to Ironwood in January.\n\nI will send a short scoping questionnaire tomorrow. Luis, the CRM export from Ironwood will help us size that work.\n\nBest,\nCasey"
+            },
+            "confidence": {
+              "summary": 0.82,
+              "actionItems": 0.85
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 9974,
+        "output_tokens": 384
+      }
+    }
+  ],
+  "reduce": null
+}

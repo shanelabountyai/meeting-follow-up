@@ -1,0 +1,30 @@
+{
+  "id": "F04",
+  "file": "F04-two-companies-intro.txt",
+  "format": "txt",
+  "minutes": 35,
+  "covers": "two companies named, no emails: rule 3 returns two candidates, routed to Needs-Review (never a guess)",
+  "chars": 33143,
+  "chunks": 1,
+  "outcome": "review",
+  "reason": "unmatched",
+  "matchRule": "none",
+  "companyId": null,
+  "dealId": null,
+  "candidates": [
+    "104",
+    "105"
+  ],
+  "recipients": [],
+  "notInCrm": [],
+  "actionItems": [
+    {
+      "owner": "Casey Moreno",
+      "quote": "I'll send a short scoping questionnaire for Cedar Ridge Software tomorrow."
+    },
+    {
+      "owner": "Luis Ferreira",
+      "quote": "I'll pull the current CRM export from Ironwood Manufacturing so you can see the size of it."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "inboxFolderId": "REPLACE_WITH_FOLDER_ID_Meetings_Inbox",
+  "processedFolderId": "REPLACE_WITH_FOLDER_ID_Meetings_Processed",
+  "processingFolderId": "REPLACE_WITH_FOLDER_ID_Meetings_Processing",
+  "needsReviewFolderId": "REPLACE_WITH_FOLDER_ID_Meetings_Needs-Review",
+  "ledgerSheetId": "REPLACE_WITH_SHEET_ID_N7_ledger",
+  "ledgerTab": "processed",
+  "errorsTab": "errors",
+  "hubspotOwnerId": "REPLACE_WITH_HUBSPOT_OWNER_ID",
+  "fromAddress": "REPLACE_WITH_FROM_ADDRESS",
+  "ownDomains": ["tallgrassadvisory.example"],
+  "model": "claude-sonnet-5-5",
+  "maxOutputTokens": 4000,
+  "dailyCallCap": 50,
+  "perFileTokenCeiling": 100000,
+  "chunkChars": 60000,
+  "priceInputPerMTokUsd": null,
+  "priceOutputPerMTokUsd": null,
+  "alertWebhookUrl": ""
+}

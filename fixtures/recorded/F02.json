@@ -1,0 +1,84 @@
+{
+  "responses": [
+    {
+      "id": "msg_recorded_F02",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F02",
+          "name": "record_meeting",
+          "input": {
+            "title": "Harborview Credit Union — member portal check-in",
+            "meetingDate": "2026-10-14",
+            "attendees": [
+              {
+                "name": "Casey Moreno",
+                "email": "casey@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Elena Sokolova",
+                "email": "elena.sokolova@freemail.example",
+                "external": true
+              },
+              {
+                "name": "Raj Patel",
+                "email": "rpatel.hv@freemail.example",
+                "external": true
+              }
+            ],
+            "summary": "Elena Sokolova reported that the board approved the Member Portal Refresh budget. The group kept the scope as written and put the login redesign first. Other work was moved to phase two. The person who signs off on the final design was not named.",
+            "decisions": [
+              "Keep the Member Portal Refresh scope as written.",
+              "Start with the login redesign; everything else waits for phase two."
+            ],
+            "actionItems": [
+              {
+                "owner": "Casey Moreno",
+                "task": "Send the revised timeline",
+                "due": "2026-10-16",
+                "quote": "I'll send the revised timeline to both of you by Friday."
+              },
+              {
+                "owner": "Raj Patel",
+                "task": "Send the twelve most common login support tickets",
+                "due": null,
+                "quote": "I'll get you the list of the twelve most common support tickets about logging in."
+              },
+              {
+                "owner": "Elena Sokolova",
+                "task": "Look at the mobile app",
+                "due": null,
+                "quote": "We might also want to look at the mobile app at some point."
+              }
+            ],
+            "openQuestions": [
+              "Who signs off on the final design at Harborview?"
+            ],
+            "companyMentions": [
+              "Harborview Credit Union"
+            ],
+            "dealReference": "Member Portal Refresh",
+            "followUp": {
+              "subject": "Member portal: next steps",
+              "body": "Hi Elena and Raj,\n\nThanks for the update on the budget. We agreed to keep the Member Portal Refresh scope as written and to start with the login redesign, with everything else in phase two.\n\nI will send the revised timeline by Friday. Raj, the list of the most common login tickets will help us prioritise.\n\nOne open point: who signs off on the final design on your side?\n\nBest,\nCasey"
+            },
+            "confidence": {
+              "summary": 0.86,
+              "actionItems": 0.8
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 7611,
+        "output_tokens": 470
+      }
+    }
+  ],
+  "reduce": null
+}

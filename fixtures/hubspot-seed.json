@@ -1,0 +1,94 @@
+{
+  "note": "Synthetic demo records for the fixtures. Ids are those of the offline fake; HubSpot assigns its own on import.",
+  "host": {
+    "name": "Tallgrass Advisory",
+    "domains": [
+      "tallgrassadvisory.example"
+    ]
+  },
+  "companies": [
+    {
+      "id": "101",
+      "name": "Bluewater Freight",
+      "domain": "bluewaterfreight.example"
+    },
+    {
+      "id": "102",
+      "name": "Harborview Credit Union",
+      "domain": "harborviewcu.example"
+    },
+    {
+      "id": "103",
+      "name": "Alder & Finch Architects",
+      "domain": "alderfinch.example"
+    },
+    {
+      "id": "104",
+      "name": "Cedar Ridge Software",
+      "domain": "cedarridgesoftware.example"
+    },
+    {
+      "id": "105",
+      "name": "Ironwood Manufacturing",
+      "domain": "ironwoodmfg.example"
+    },
+    {
+      "id": "106",
+      "name": "Pinecrest Dental Group",
+      "domain": "pinecrestdental.example"
+    },
+    {
+      "id": "107",
+      "name": "Greenline Energy",
+      "domain": "greenlineenergy.example"
+    },
+    {
+      "id": "108",
+      "name": "Lakeshore Staffing",
+      "domain": "lakeshorestaffing.example"
+    },
+    {
+      "id": "109",
+      "name": "Summit Ridge Realty",
+      "domain": "summitridgerealty.example"
+    }
+  ],
+  "deals": [
+    {
+      "id": "201",
+      "name": "Member Portal Refresh",
+      "companyIds": [
+        "102"
+      ]
+    },
+    {
+      "id": "202",
+      "name": "Fleet Reporting Rollout",
+      "companyIds": [
+        "101"
+      ]
+    }
+  ],
+  "contacts": [
+    {
+      "id": "301",
+      "email": "tokafor@bluewaterfreight.example"
+    },
+    {
+      "id": "302",
+      "email": "marcus.webb@pinecrestdental.example"
+    },
+    {
+      "id": "303",
+      "email": "aisha.bello@greenlineenergy.example"
+    },
+    {
+      "id": "304",
+      "email": "hkim@lakeshorestaffing.example"
+    },
+    {
+      "id": "305",
+      "email": "owen.grant@summitridgerealty.example"
+    }
+  ]
+}

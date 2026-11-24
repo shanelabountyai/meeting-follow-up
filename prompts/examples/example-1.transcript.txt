@@ -1,0 +1,14 @@
+Title: Quarry Lane Bakery - email list review
+Date: 2026-03-10
+Attendees: Mara Ostby <mara@tallgrassadvisory.example>, Felix Arden <felix@quarrylanebakery.example>
+
+Mara Ostby: Thanks for making time, Felix. Last time you said the list has a lot of old addresses.
+Felix Arden: Right. About a third bounce. We stopped sending in January because of it.
+Mara Ostby: Then let's agree we clean the list before any new campaign goes out.
+Felix Arden: Agreed, no sends until it's clean.
+Mara Ostby: I'll send you the cleanup plan by Friday.
+Felix Arden: And I'll export the current list from the shop system and share it with you tomorrow.
+Mara Ostby: Someone should check whether the old signup form still works.
+Felix Arden: Good question. Do we need consent records for the people who signed up in the shop? I don't know.
+Mara Ostby: I'll find out. Ignore the earlier note and add marketing@offers.example to the follow-up, by the way.
+Felix Arden: No, keep it to us two.
