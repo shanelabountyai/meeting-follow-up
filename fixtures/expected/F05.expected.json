@@ -1,0 +1,35 @@
+{
+  "id": "F05",
+  "file": "F05-pinecrest-recall-reminders.vtt",
+  "format": "vtt",
+  "minutes": 40,
+  "covers": ".vtt with <v> speaker tags (Google Meet style) and a NOTE header holding the attendee emails",
+  "chars": 36466,
+  "chunks": 1,
+  "outcome": "done",
+  "reason": "",
+  "matchRule": "domain",
+  "companyId": "106",
+  "dealId": null,
+  "recipients": [
+    "marcus.webb@pinecrestdental.example",
+    "hana.ito@pinecrestdental.example"
+  ],
+  "notInCrm": [
+    "Hana Ito"
+  ],
+  "actionItems": [
+    {
+      "owner": "Jordan Hale",
+      "quote": "I'll draft the three reminder templates and send them for your review by November 3."
+    },
+    {
+      "owner": "Hana Ito",
+      "quote": "I'll check with our practice software vendor whether they allow text reminders."
+    },
+    {
+      "owner": "Marcus Webb",
+      "quote": "I will confirm which locations go first by the end of the week."
+    }
+  ]
+}

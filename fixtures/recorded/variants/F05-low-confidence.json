@@ -1,0 +1,86 @@
+{
+  "base": "F05",
+  "expect": {
+    "outcome": "review",
+    "reason": "low_confidence",
+    "note": true,
+    "draft": true
+  },
+  "responses": [
+    {
+      "id": "msg_recorded_F05-low-confidence",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F05-low-confidence",
+          "name": "record_meeting",
+          "input": {
+            "title": "Recall reminders working session",
+            "meetingDate": "2026-10-27",
+            "attendees": [
+              {
+                "name": "Jordan Hale",
+                "email": "jordan@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Marcus Webb",
+                "email": "marcus.webb@pinecrestdental.example",
+                "external": true
+              },
+              {
+                "name": "Hana Ito",
+                "email": "hana.ito@pinecrestdental.example",
+                "external": true
+              }
+            ],
+            "summary": "Marcus Webb said the front desk calls every patient by hand for recall appointments. The group agreed to automate six-month recall reminders first. New-patient follow-up was left for later.",
+            "decisions": [
+              "Automate six-month recall reminders first; new-patient follow-up later."
+            ],
+            "actionItems": [
+              {
+                "owner": "Jordan Hale",
+                "task": "Draft three reminder templates and send them for review",
+                "due": "2026-11-03",
+                "quote": "I'll draft the three reminder templates and send them for your review by November 3."
+              },
+              {
+                "owner": "Hana Ito",
+                "task": "Check whether the practice software vendor allows text reminders",
+                "due": null,
+                "quote": "I'll check with our practice software vendor whether they allow text reminders."
+              },
+              {
+                "owner": "Marcus Webb",
+                "task": "Confirm which locations go first",
+                "due": "2026-10-30",
+                "quote": "I will confirm which locations go first by the end of the week."
+              }
+            ],
+            "openQuestions": [],
+            "companyMentions": [],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Recall reminders: next steps",
+              "body": "Hi Marcus and Hana,\n\nThanks for the working session. We agreed to automate the six-month recall reminders first and to leave new-patient follow-up for later.\n\nI will send three reminder templates for your review by November 3.\n\nBest,\nJordan"
+            },
+            "confidence": {
+              "summary": 0.5,
+              "actionItems": 0.6
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 404
+      }
+    }
+  ],
+  "reduce": null
+}

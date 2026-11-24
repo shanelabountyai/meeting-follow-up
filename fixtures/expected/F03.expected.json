@@ -1,0 +1,30 @@
+{
+  "id": "F03",
+  "file": "F03-alder-finch-website-leads.txt",
+  "format": "txt",
+  "minutes": 20,
+  "covers": "rule 3: no attendee emails, the company is named aloud; no recipients so no draft",
+  "chars": 18772,
+  "chunks": 1,
+  "outcome": "done",
+  "reason": "",
+  "matchRule": "name",
+  "companyId": "103",
+  "dealId": null,
+  "recipients": [],
+  "notInCrm": [],
+  "actionItems": [
+    {
+      "owner": "Jordan Hale",
+      "quote": "I'll audit where the form submissions go today and report back next Tuesday."
+    },
+    {
+      "owner": "Theo Lindqvist",
+      "quote": "I'll send you the login for the website builder this afternoon."
+    },
+    {
+      "owner": "Priya Raman",
+      "quote": "I will write up which project types we actually want more of."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "F02",
+  "file": "F02-harborview-member-portal.md",
+  "format": "md",
+  "minutes": 25,
+  "covers": "rule 2: attendee emails are personal addresses (no company domain), a deal name quoted in the meeting",
+  "chars": 23692,
+  "chunks": 1,
+  "outcome": "done",
+  "reason": "",
+  "matchRule": "deal",
+  "companyId": "102",
+  "dealId": "201",
+  "recipients": [
+    "elena.sokolova@freemail.example",
+    "rpatel.hv@freemail.example"
+  ],
+  "notInCrm": [
+    "Elena Sokolova",
+    "Raj Patel"
+  ],
+  "actionItems": [
+    {
+      "owner": "Casey Moreno",
+      "quote": "I'll send the revised timeline to both of you by Friday."
+    },
+    {
+      "owner": "Raj Patel",
+      "quote": "I'll get you the list of the twelve most common support tickets about logging in."
+    }
+  ]
+}

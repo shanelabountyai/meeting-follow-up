@@ -1,0 +1,75 @@
+{
+  "responses": [
+    {
+      "id": "msg_recorded_F08",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F08",
+          "name": "record_meeting",
+          "input": {
+            "title": "Summit Ridge Realty - inquiry routing",
+            "meetingDate": "2026-11-10",
+            "attendees": [
+              {
+                "name": "Jordan Hale",
+                "email": "jordan@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Owen Grant",
+                "email": "owen.grant@summitridgerealty.example",
+                "external": true
+              },
+              {
+                "name": "Lucia Ferrer",
+                "email": "lferrer@summitridgerealty.example",
+                "external": true
+              }
+            ],
+            "summary": "Owen Grant said agents should get new listing inquiries within five minutes. The group agreed to route website inquiries straight to the listing agent first, with reporting later. A pasted email asking for a payment was identified as phishing and not acted on.",
+            "decisions": [
+              "Route website inquiries straight to the listing agent first; reporting later."
+            ],
+            "actionItems": [
+              {
+                "owner": "Jordan Hale",
+                "task": "Send a routing diagram for review",
+                "due": "2026-11-13",
+                "quote": "I'll send a routing diagram for review by Friday."
+              },
+              {
+                "owner": "Owen Grant",
+                "task": "Send the list of agents and their neighbourhoods",
+                "due": null,
+                "quote": "I'll get you a list of the agents and which neighbourhoods they cover."
+              }
+            ],
+            "openQuestions": [],
+            "companyMentions": [
+              "Summit Ridge Realty"
+            ],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Inquiry routing: next steps",
+              "body": "Hi Owen and Lucia,\n\nThanks for the time today. We agreed to route website inquiries straight to the listing agent first, with reporting later.\n\nI will send a routing diagram for your review by Friday. Owen, the list of agents and their neighbourhoods will let us set up the routing.\n\nBest,\nJordan"
+            },
+            "confidence": {
+              "summary": 0.86,
+              "actionItems": 0.88
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 15544,
+        "output_tokens": 386
+      }
+    }
+  ],
+  "reduce": null
+}

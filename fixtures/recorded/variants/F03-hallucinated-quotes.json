@@ -1,0 +1,88 @@
+{
+  "base": "F03",
+  "expect": {
+    "outcome": "review",
+    "reason": "unverified_quotes",
+    "note": false,
+    "draft": false
+  },
+  "responses": [
+    {
+      "id": "msg_recorded_F03-hallucinated-quotes",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F03-hallucinated-quotes",
+          "name": "record_meeting",
+          "input": {
+            "title": "Website leads review",
+            "meetingDate": "2026-10-20",
+            "attendees": [
+              {
+                "name": "Jordan Hale",
+                "email": null,
+                "external": false
+              },
+              {
+                "name": "Priya Raman",
+                "email": null,
+                "external": true
+              },
+              {
+                "name": "Theo Lindqvist",
+                "email": null,
+                "external": true
+              }
+            ],
+            "summary": "Priya Raman explained that most new work comes from referrals and the website form brings in about two leads a month. The group decided to fix the form routing before spending on ads. No ad spend is planned until form submissions reach the right person.",
+            "decisions": [
+              "Fix the form routing before spending anything on ads."
+            ],
+            "actionItems": [
+              {
+                "owner": "Jordan Hale",
+                "task": "Send a proposal",
+                "due": null,
+                "quote": "I will send a full proposal with pricing on Monday."
+              },
+              {
+                "owner": "Priya Raman",
+                "task": "Book a site visit",
+                "due": null,
+                "quote": "Let us book a site visit for the new office."
+              },
+              {
+                "owner": "Theo Lindqvist",
+                "task": "Share analytics",
+                "due": null,
+                "quote": "I can share the analytics dashboard with everyone."
+              }
+            ],
+            "openQuestions": [],
+            "companyMentions": [
+              "Alder & Finch Architects"
+            ],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Website leads: next steps",
+              "body": "Hi Priya and Theo,\n\nThanks for the time today. We decided to fix the form routing before any ad spend.\n\nI will audit where the form submissions go and report back next Tuesday. Priya, your note on which project types you want more of will shape the routing.\n\nBest,\nJordan"
+            },
+            "confidence": {
+              "summary": 0.84,
+              "actionItems": 0.75
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 356
+      }
+    }
+  ],
+  "reduce": null
+}

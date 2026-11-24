@@ -1,0 +1,43 @@
+{
+  "id": "F06",
+  "file": "F06-greenline-scoring-90min.txt",
+  "format": "txt",
+  "minutes": 90,
+  "covers": "90-minute transcript over 60,000 characters: chunked by speaker turn, map then reduce",
+  "chars": 83091,
+  "chunks": 2,
+  "outcome": "done",
+  "reason": "",
+  "matchRule": "domain",
+  "companyId": "107",
+  "dealId": null,
+  "recipients": [
+    "aisha.bello@greenlineenergy.example",
+    "kmori@greenlineenergy.example"
+  ],
+  "notInCrm": [
+    "Ken Mori"
+  ],
+  "actionItems": [
+    {
+      "owner": "Jordan Hale",
+      "quote": "I'll send the current scoring rules export to Ken by Wednesday."
+    },
+    {
+      "owner": "Ken Mori",
+      "quote": "I'll set up a sandbox portal for testing the new scoring."
+    },
+    {
+      "owner": "Aisha Bello",
+      "quote": "I will share the list of the twenty accounts sales trusts most."
+    },
+    {
+      "owner": "Casey Moreno",
+      "quote": "I'll write the scoring proposal and circulate it before November 16."
+    },
+    {
+      "owner": "Unassigned",
+      "quote": "We also need someone to clean up the duplicate company records at some point."
+    }
+  ]
+}

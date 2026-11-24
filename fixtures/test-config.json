@@ -1,0 +1,19 @@
+{
+  "inboxFolderId": "fake-inbox",
+  "processedFolderId": "fake-processed",
+  "needsReviewFolderId": "fake-needs-review",
+  "ledgerSheetId": "fake-sheet",
+  "ledgerTab": "processed",
+  "errorsTab": "errors",
+  "hubspotOwnerId": "9000001",
+  "fromAddress": "Tallgrass Advisory <followup@tallgrassadvisory.example>",
+  "ownDomains": ["tallgrassadvisory.example"],
+  "model": "claude-sonnet-5-5",
+  "maxOutputTokens": 4000,
+  "dailyCallCap": 50,
+  "perFileTokenCeiling": 100000,
+  "chunkChars": 60000,
+  "priceInputPerMTokUsd": null,
+  "priceOutputPerMTokUsd": null,
+  "alertWebhookUrl": ""
+}

@@ -1,0 +1,39 @@
+{
+  "id": "F01",
+  "file": "F01-bluewater-fleet-reporting.txt",
+  "format": "txt",
+  "minutes": 30,
+  "covers": "baseline: attendee emails in the header, rule 1 (domain) match",
+  "chars": 28251,
+  "chunks": 1,
+  "outcome": "done",
+  "reason": "",
+  "matchRule": "domain",
+  "companyId": "101",
+  "dealId": null,
+  "recipients": [
+    "tokafor@bluewaterfreight.example",
+    "ivarga@bluewaterfreight.example"
+  ],
+  "notInCrm": [
+    "Ines Varga"
+  ],
+  "actionItems": [
+    {
+      "owner": "Jordan Hale",
+      "quote": "I'll send over the data access checklist by Thursday."
+    },
+    {
+      "owner": "Ines Varga",
+      "quote": "I can export last quarter's dispatch data and share it by October 13."
+    },
+    {
+      "owner": "Tomas Okafor",
+      "quote": "I will book a session with our IT lead so you can get read access to the dispatch database."
+    },
+    {
+      "owner": "Jordan Hale",
+      "quote": "I'll put together a one-page cost estimate for the reporting work."
+    }
+  ]
+}

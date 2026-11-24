@@ -1,0 +1,94 @@
+{
+  "base": "F07",
+  "expect": {
+    "outcome": "review",
+    "reason": "followup_placeholder",
+    "note": false,
+    "draft": false
+  },
+  "responses": [
+    {
+      "id": "msg_recorded_F07-placeholder",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F07-placeholder",
+          "name": "record_meeting",
+          "input": {
+            "title": "Lakeshore Staffing — candidate source tracking",
+            "meetingDate": "2026-11-05",
+            "attendees": [
+              {
+                "name": "Casey Moreno",
+                "email": "casey@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Hyun Kim",
+                "email": "hkim@lakeshorestaffing.example",
+                "external": true
+              },
+              {
+                "name": "Grace Liu",
+                "email": "grace.liu@lakeshorestaffing.example",
+                "external": true
+              }
+            ],
+            "summary": "Hyun Kim reported that placements are up but the job boards that produce hires are unknown. The group agreed on one required source field for every candidate record. Recruiters still need to be told about the field before it goes live.",
+            "decisions": [
+              "Use one required source field on every candidate record."
+            ],
+            "actionItems": [
+              {
+                "owner": "Casey Moreno",
+                "task": "Map current source values and send the cleanup list",
+                "due": "2026-11-12",
+                "quote": "I'll map the current source values and send the cleanup list by November 12."
+              },
+              {
+                "owner": "Grace Liu",
+                "task": "Make the source field required on the intake form",
+                "due": null,
+                "quote": "I'll update the intake form so the source field is required."
+              },
+              {
+                "owner": "Unassigned",
+                "task": "Tell the recruiters about the new field before it goes live",
+                "due": null,
+                "quote": "Somebody needs to tell the recruiters about the new field before it goes live."
+              },
+              {
+                "owner": "Hyun Kim",
+                "task": "Pull last year's placement numbers by job board",
+                "due": null,
+                "quote": "I'll pull last year's placement numbers by job board, if the data is there."
+              }
+            ],
+            "openQuestions": [],
+            "companyMentions": [
+              "Lakeshore Staffing"
+            ],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Candidate source tracking: next steps",
+              "body": "Hi Hyun and Grace,\n\nThanks for the time today. We agreed on one required source field for every candidate record.\n\nI will map the current source values and send the cleanup list by November 12. Someone still needs to tell the recruiters about the new field before it goes live; let me know who should own that.\n\nNext call: [insert date].\n\nBest,\nCasey"
+            },
+            "confidence": {
+              "summary": 0.87,
+              "actionItems": 0.82
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 491
+      }
+    }
+  ],
+  "reduce": null
+}

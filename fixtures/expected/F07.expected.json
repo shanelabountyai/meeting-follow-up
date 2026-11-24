@@ -1,0 +1,39 @@
+{
+  "id": "F07",
+  "file": "F07-lakeshore-candidate-source.md",
+  "format": "md",
+  "minutes": 45,
+  "covers": "an action item nobody took on: owner Unassigned, item kept",
+  "chars": 41064,
+  "chunks": 1,
+  "outcome": "done",
+  "reason": "",
+  "matchRule": "domain",
+  "companyId": "108",
+  "dealId": null,
+  "recipients": [
+    "hkim@lakeshorestaffing.example",
+    "grace.liu@lakeshorestaffing.example"
+  ],
+  "notInCrm": [
+    "Grace Liu"
+  ],
+  "actionItems": [
+    {
+      "owner": "Casey Moreno",
+      "quote": "I'll map the current source values and send the cleanup list by November 12."
+    },
+    {
+      "owner": "Grace Liu",
+      "quote": "I'll update the intake form so the source field is required."
+    },
+    {
+      "owner": "Unassigned",
+      "quote": "Somebody needs to tell the recruiters about the new field before it goes live."
+    },
+    {
+      "owner": "Hyun Kim",
+      "quote": "I'll pull last year's placement numbers by job board, if the data is there."
+    }
+  ]
+}

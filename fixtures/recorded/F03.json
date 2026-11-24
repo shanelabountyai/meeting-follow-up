@@ -1,0 +1,75 @@
+{
+  "responses": [
+    {
+      "id": "msg_recorded_F03",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F03",
+          "name": "record_meeting",
+          "input": {
+            "title": "Website leads review",
+            "meetingDate": "2026-10-20",
+            "attendees": [
+              {
+                "name": "Jordan Hale",
+                "email": null,
+                "external": false
+              },
+              {
+                "name": "Priya Raman",
+                "email": null,
+                "external": true
+              },
+              {
+                "name": "Theo Lindqvist",
+                "email": null,
+                "external": true
+              }
+            ],
+            "summary": "Priya Raman explained that most new work comes from referrals and the website form brings in about two leads a month. The group decided to fix the form routing before spending on ads. No ad spend is planned until form submissions reach the right person.",
+            "decisions": [
+              "Fix the form routing before spending anything on ads."
+            ],
+            "actionItems": [
+              {
+                "owner": "Jordan Hale",
+                "task": "Audit where form submissions go and report back",
+                "due": "2026-10-27",
+                "quote": "I'll audit where the form submissions go today and report back next Tuesday."
+              },
+              {
+                "owner": "Priya Raman",
+                "task": "Write up which project types they want more of",
+                "due": null,
+                "quote": "I will write up which project types we actually want more of."
+              }
+            ],
+            "openQuestions": [],
+            "companyMentions": [
+              "Alder & Finch Architects"
+            ],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Website leads: next steps",
+              "body": "Hi Priya and Theo,\n\nThanks for the time today. We decided to fix the form routing before any ad spend.\n\nI will audit where the form submissions go and report back next Tuesday. Priya, your note on which project types you want more of will shape the routing.\n\nBest,\nJordan"
+            },
+            "confidence": {
+              "summary": 0.84,
+              "actionItems": 0.75
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 6381,
+        "output_tokens": 353
+      }
+    }
+  ],
+  "reduce": null
+}

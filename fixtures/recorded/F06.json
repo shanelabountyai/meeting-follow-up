@@ -1,0 +1,253 @@
+{
+  "responses": [
+    {
+      "id": "msg_recorded_F06_part1",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F06_part1",
+          "name": "record_meeting",
+          "input": {
+            "title": "Greenline Energy - lead scoring workshop",
+            "meetingDate": "2026-11-02",
+            "attendees": [
+              {
+                "name": "Jordan Hale",
+                "email": "jordan@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Casey Moreno",
+                "email": "casey@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Aisha Bello",
+                "email": "aisha.bello@greenlineenergy.example",
+                "external": true
+              },
+              {
+                "name": "Ken Mori",
+                "email": "kmori@greenlineenergy.example",
+                "external": true
+              }
+            ],
+            "summary": "Part 1 of the workshop. Aisha Bello said quarterly planning starts in three weeks. The group agreed to rebuild the lead scoring model before planning starts. Ken Mori is setting up a sandbox portal for testing. Whether scoring covers the partner channel was not decided.",
+            "decisions": [
+              "Rebuild the lead scoring model before quarterly planning starts."
+            ],
+            "actionItems": [
+              {
+                "owner": "Jordan Hale",
+                "task": "Send the current scoring rules export to Ken",
+                "due": "2026-11-04",
+                "quote": "I'll send the current scoring rules export to Ken by Wednesday."
+              },
+              {
+                "owner": "Ken Mori",
+                "task": "Set up a sandbox portal for testing",
+                "due": null,
+                "quote": "I'll set up a sandbox portal for testing the new scoring."
+              },
+              {
+                "owner": "Aisha Bello",
+                "task": "Share the twenty accounts sales trusts most",
+                "due": null,
+                "quote": "I will share the list of the twenty accounts sales trusts most."
+              },
+              {
+                "owner": "Casey Moreno",
+                "task": "Write and circulate the scoring proposal",
+                "due": "2026-11-16",
+                "quote": "I'll write the scoring proposal and circulate it before November 16."
+              }
+            ],
+            "openQuestions": [
+              "Does the scoring need to cover the partner channel?"
+            ],
+            "companyMentions": [],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Lead scoring workshop: next steps",
+              "body": "Hi Aisha and Ken,\n\nThanks for the workshop. We agreed to rebuild the lead scoring model before your quarterly planning starts.\n\nFrom our side: the current scoring rules export by Wednesday, and the scoring proposal before November 16.\n\nStill open: whether scoring covers the partner channel.\n\nBest,\nJordan and Casey"
+            },
+            "confidence": {
+              "summary": 0.8,
+              "actionItems": 0.8
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 16684,
+        "output_tokens": 502
+      }
+    },
+    {
+      "id": "msg_recorded_F06_part2",
+      "type": "message",
+      "role": "assistant",
+      "model": "recorded-stand-in",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_recorded_F06_part2",
+          "name": "record_meeting",
+          "input": {
+            "title": "Greenline Energy - lead scoring workshop",
+            "meetingDate": "2026-11-02",
+            "attendees": [
+              {
+                "name": "Jordan Hale",
+                "email": "jordan@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Casey Moreno",
+                "email": "casey@tallgrassadvisory.example",
+                "external": false
+              },
+              {
+                "name": "Aisha Bello",
+                "email": "aisha.bello@greenlineenergy.example",
+                "external": true
+              },
+              {
+                "name": "Ken Mori",
+                "email": "kmori@greenlineenergy.example",
+                "external": true
+              }
+            ],
+            "summary": "Part 2 of the workshop. Aisha Bello said quarterly planning starts in three weeks. The group agreed to rebuild the lead scoring model before planning starts. Ken Mori is setting up a sandbox portal for testing. Whether scoring covers the partner channel was not decided.",
+            "decisions": [
+              "Rebuild the lead scoring model before quarterly planning starts."
+            ],
+            "actionItems": [
+              {
+                "owner": "Unassigned",
+                "task": "Clean up duplicate company records",
+                "due": null,
+                "quote": "We also need someone to clean up the duplicate company records at some point."
+              }
+            ],
+            "openQuestions": [
+              "Does the scoring need to cover the partner channel?"
+            ],
+            "companyMentions": [],
+            "dealReference": null,
+            "followUp": {
+              "subject": "Lead scoring workshop: next steps",
+              "body": "Hi Aisha and Ken,\n\nThanks for the workshop. We agreed to rebuild the lead scoring model before your quarterly planning starts.\n\nFrom our side: the current scoring rules export by Wednesday, and the scoring proposal before November 16.\n\nStill open: whether scoring covers the partner channel.\n\nBest,\nJordan and Casey"
+            },
+            "confidence": {
+              "summary": 0.8,
+              "actionItems": 0.8
+            }
+          }
+        }
+      ],
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 7531,
+        "output_tokens": 380
+      }
+    }
+  ],
+  "reduce": {
+    "id": "msg_recorded_F06_reduce",
+    "type": "message",
+    "role": "assistant",
+    "model": "recorded-stand-in",
+    "content": [
+      {
+        "type": "tool_use",
+        "id": "toolu_recorded_F06_reduce",
+        "name": "record_meeting",
+        "input": {
+          "title": "Greenline Energy - lead scoring workshop",
+          "meetingDate": "2026-11-02",
+          "attendees": [
+            {
+              "name": "Jordan Hale",
+              "email": "jordan@tallgrassadvisory.example",
+              "external": false
+            },
+            {
+              "name": "Casey Moreno",
+              "email": "casey@tallgrassadvisory.example",
+              "external": false
+            },
+            {
+              "name": "Aisha Bello",
+              "email": "aisha.bello@greenlineenergy.example",
+              "external": true
+            },
+            {
+              "name": "Ken Mori",
+              "email": "kmori@greenlineenergy.example",
+              "external": true
+            }
+          ],
+          "summary": "Aisha Bello said quarterly planning starts in three weeks. The group agreed to rebuild the lead scoring model before planning starts. Ken Mori is setting up a sandbox portal for testing. Whether scoring covers the partner channel was not decided.",
+          "decisions": [
+            "Rebuild the lead scoring model before quarterly planning starts."
+          ],
+          "actionItems": [
+            {
+              "owner": "Jordan Hale",
+              "task": "Send the current scoring rules export to Ken",
+              "due": "2026-11-04",
+              "quote": "I'll send the current scoring rules export to Ken by Wednesday."
+            },
+            {
+              "owner": "Ken Mori",
+              "task": "Set up a sandbox portal for testing",
+              "due": null,
+              "quote": "I'll set up a sandbox portal for testing the new scoring."
+            },
+            {
+              "owner": "Aisha Bello",
+              "task": "Share the twenty accounts sales trusts most",
+              "due": null,
+              "quote": "I will share the list of 20 accounts that sales trusts most."
+            },
+            {
+              "owner": "Casey Moreno",
+              "task": "Write and circulate the scoring proposal",
+              "due": "2026-11-16",
+              "quote": "I'll write the scoring proposal and circulate it before November 16."
+            },
+            {
+              "owner": "Unassigned",
+              "task": "Clean up duplicate company records",
+              "due": null,
+              "quote": "We also need someone to clean up the duplicate company records at some point."
+            }
+          ],
+          "openQuestions": [
+            "Does the scoring need to cover the partner channel?"
+          ],
+          "companyMentions": [],
+          "dealReference": null,
+          "followUp": {
+            "subject": "Lead scoring workshop: next steps",
+            "body": "Hi Aisha and Ken,\n\nThanks for the workshop. We agreed to rebuild the lead scoring model before your quarterly planning starts.\n\nFrom our side: the current scoring rules export by Wednesday, and the scoring proposal before November 16.\n\nStill open: whether scoring covers the partner channel.\n\nBest,\nJordan and Casey"
+          },
+          "confidence": {
+            "summary": 0.8,
+            "actionItems": 0.8
+          }
+        }
+      }
+    ],
+    "stop_reason": "tool_use",
+    "usage": {
+      "input_tokens": 2358,
+      "output_tokens": 536
+    }
+  }
+}
