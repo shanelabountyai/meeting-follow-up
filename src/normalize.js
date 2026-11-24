@@ -32,7 +32,7 @@ function baseKey(name) {
 
 function normalizeText(s) {
   return String(s ?? '')
-    .replace(/^﻿/, '')
+    .replace(/^\uFEFF/, '')
     .replace(/\r\n?/g, '\n')
     .normalize('NFC')
     .replace(/[ \t]+\n/g, '\n')

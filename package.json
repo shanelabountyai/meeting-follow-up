@@ -9,7 +9,7 @@
     "build": "node scripts/build-workflow.js && node fixtures/build.js",
     "check": "node scripts/build-workflow.js --check && node fixtures/build.js --check",
     "lint": "eslint .",
-    "test": "node --test test/",
+    "test": "node --test test/*.test.js",
     "eval": "node scripts/eval.js",
     "gate": "npm run lint && npm run check && npm test"
   },

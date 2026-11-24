@@ -53,7 +53,7 @@ function parseResponse(api) {
   try {
     const t = raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
     return { ok: true, value: JSON.parse(t), raw, usage, reason: '' };
-  } catch (e) {
+  } catch {
     return { ok: false, value: null, raw, usage, reason: 'not valid JSON' };
   }
 }
