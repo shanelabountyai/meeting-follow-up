@@ -13,7 +13,7 @@ NODE_FUNCTION_ALLOW_BUILTIN=crypto,zlib n8n start
 
 ## 2. Drive folders and the ledger sheet
 
-1. In the Lab Intelligence Workspace shared drive, create `Meetings/Inbox`, `Meetings/Processed`, `Meetings/Needs-Review`. Copy each folder id from its URL.
+1. In the Lab Intelligence Workspace shared drive, create `Meetings/Inbox`, `Meetings/Processing`, `Meetings/Processed`, `Meetings/Needs-Review`. Copy each folder id from its URL. (`Processing` holds the file a run is working on; D-32.)
 2. Create a Google Sheet `N7 ledger` with two tabs:
    - `processed`, row 1: `file_id, content_hash, status, reason, match_rule, company_id, deal_id, note_id, draft_id, draft_state, prompt_version, model, model_calls, input_tokens, output_tokens, cost_usd, runtime_s, override, processed_at` (one header per column, A to S)
    - `errors`, row 1: `time, execution_id, node, message`
@@ -42,7 +42,7 @@ Or Import from File in the editor. Then open the workflow:
 
 | Field | Value |
 |---|---|
-| `inboxFolderId`, `processedFolderId`, `needsReviewFolderId` | the three folder ids |
+| `inboxFolderId`, `processingFolderId`, `processedFolderId`, `needsReviewFolderId` | the four folder ids |
 | `ledgerSheetId` | the sheet id; `ledgerTab` / `errorsTab` stay `processed` / `errors` |
 | `hubspotOwnerId` | your HubSpot owner id (N1's `rules/config.json` has it) |
 | `fromAddress` | the From line for drafts updated by a re-run, e.g. `Tallgrass Advisory <you@...>` |

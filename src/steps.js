@@ -40,6 +40,7 @@ function plan({ cfg, listing, ledgerValues, nowIso }) {
     file: { id: file.id, name: file.name, mimeType: file.mimeType || '', webViewLink: file.webViewLink || '', kind: file.mimeType === GDOC ? 'gdoc' : N.extOf(file.name) },
     override: override ? { id: override.id, name: override.name, url: `https://www.googleapis.com/drive/v3/files/${override.id}?alt=media&supportsAllDrives=true` } : null,
     downloadUrl,
+    claim: { fileId: file.id, from: cfg.inboxFolderId, to: cfg.processingFolderId },
     callsToday,
     remaining: queue.length - 1,
   };
@@ -57,16 +58,19 @@ function sha256(text) {
 }
 
 // Normalise: file bytes → text, content hash, ledger record, spend gate, model requests.
-function normalise({ cfg, planned, buffer, overrideJson, ledgerValues, prompts }) {
+// downloadError / overrideError: the Drive download failed after retries. The file still goes to Needs-Review
+// (PRD §4: failure is a folder), so one bad file cannot block the queue.
+function normalise({ cfg, planned, buffer, overrideJson, ledgerValues, prompts, downloadError, overrideError }) {
   const records = L.rowsToRecords(ledgerValues);
   let text = '';
-  let readError = null;
-  try { text = toText(planned.file.kind, buffer); } catch (e) { readError = e.message; }
+  let readError = downloadError ? `download failed: ${downloadError}` : null;
+  if (!readError) { try { text = toText(planned.file.kind, buffer); } catch (e) { readError = e.message; } }
   const hash = text ? sha256(text) : '';
   const record = L.findRecord(records, planned.file.id, hash);
   const common = { file: planned.file, remaining: planned.remaining, hash, record, path: L.decidePath(record), override: null, overrideFile: planned.override };
   if (readError) return { ...common, route: 'review', reason: 'unreadable', detail: readError };
   if (planned.override) {
+    if (overrideError) return { ...common, route: 'review', reason: 'override_invalid', detail: `download failed: ${overrideError}` };
     try { common.override = M.parseOverride(overrideJson); } catch (e) { return { ...common, route: 'review', reason: 'override_invalid', detail: e.message }; }
   }
   if (!text || text.length < 20) return { ...common, route: 'review', reason: 'empty_transcript', detail: 'no readable text' };
@@ -124,7 +128,11 @@ function decide({ normalised, validated, domainRes, dealRes, dealAssoc, nameRes,
 
 function buildNote({ normalised, validated, match, cfg, prompts, nowIso }) {
   const html = NOTE.renderNote({ ex: validated.ex, driveLink: normalised.file.webViewLink, lowConfidence: validated.lowConfidence, notInCrm: match.notInCrm, promptVersion: prompts.version });
-  const noteId = normalised.record && normalised.record.note_id ? normalised.record.note_id : null;
+  const rec = normalised.record || {};
+  // A re-run that now matches a different company (e.g. a .match.json after a done run) gets a new note on the
+  // new company; the old note is left where it was for a person to delete (the key cannot delete notes).
+  const sameCompany = !rec.company_id || rec.company_id === match.companyId;
+  const noteId = rec.note_id && sameCompany ? rec.note_id : null;
   return noteId
     ? { mode: 'update', noteId, body: NOTE.updateNoteBody({ html }) }
     : { mode: 'create', noteId: null, body: NOTE.createNoteBody({ html, timestampIso: nowIso, ownerId: cfg.hubspotOwnerId, companyId: match.companyId, dealId: match.dealId }) };
@@ -162,7 +170,8 @@ function finish(s) {
   const noteId = (s.noteResult && s.noteResult.id) || rec.note_id || '';
   const draftId = (s.draftResult && s.draftResult.id) || rec.draft_id || '';
   const draftState = s.draftResult ? s.draftResult.state : (s.match && s.match.matched && !s.failure ? 'skipped' : '');
-  const target = status === 'waiting' ? null : (status === 'done' ? cfg.processedFolderId : cfg.needsReviewFolderId);
+  // The file was claimed into Processing at the start of the run (so overlapping runs cannot take it too).
+  const target = status === 'waiting' ? cfg.inboxFolderId : (status === 'done' ? cfg.processedFolderId : cfg.needsReviewFolderId);
   const needsSidecar = status === 'review' || status === 'failed';
   const raw = (s.collected && s.collected.failed && s.collected.failed.raw) || (v && v.raw) || null;
   const sidecar = needsSidecar ? R.buildSidecar({
@@ -181,8 +190,8 @@ function finish(s) {
   });
   return {
     status, reason, detail,
-    move: target ? { fileId: file.id, to: target, from: cfg.inboxFolderId } : null,
-    moveOverride: target && n.overrideFile ? { fileId: n.overrideFile.id, to: target, from: cfg.inboxFolderId } : null,
+    move: { fileId: file.id, to: target, from: cfg.processingFolderId },
+    moveOverride: status !== 'waiting' && n.overrideFile ? { fileId: n.overrideFile.id, to: target, from: cfg.inboxFolderId } : null,
     sidecar: sidecar ? { name: R.sidecarName(file.name), body: R.multipartUpload({ name: R.sidecarName(file.name), parentId: cfg.needsReviewFolderId, json: sidecar }), json: sidecar } : null,
     ledger: L.upsertCall({ sheetId: cfg.ledgerSheetId, tab: cfg.ledgerTab, rowNumber: rec.rowNumber || null, row }),
     row,

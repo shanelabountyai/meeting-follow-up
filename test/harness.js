@@ -47,7 +47,7 @@ function fakeGmail() {
 }
 
 function fakeDrive(files) {
-  const folders = { 'fake-inbox': new Map(), 'fake-processed': new Map(), 'fake-needs-review': new Map() };
+  const folders = { 'fake-inbox': new Map(), 'fake-processing': new Map(), 'fake-processed': new Map(), 'fake-needs-review': new Map() };
   for (const f of files) folders['fake-inbox'].set(f.id, f);
   return {
     folders,
@@ -86,6 +86,7 @@ function runOnce(env, model, opts = {}) {
   const planned = steps.plan({ cfg, listing: env.drive.list(cfg.inboxFolderId), ledgerValues: env.sheet.values, nowIso });
   trace.push('plan:' + planned.action);
   if (planned.action !== 'process') return { planned, trace };
+  env.drive.move(planned.claim);
   const overrideJson = planned.override ? env.drive.download(planned.override.id).toString('utf8') : null;
   const normalised = steps.normalise({ cfg, planned, buffer: env.drive.download(planned.file.id), overrideJson, ledgerValues: env.sheet.values, prompts });
   trace.push('normalise:' + normalised.route);
@@ -131,10 +132,10 @@ function runOnce(env, model, opts = {}) {
     }
   }
   const fin = steps.finish(s);
+  env.sheet.apply(fin.ledger);
   if (fin.sidecar) env.drive.upload(cfg.needsReviewFolderId, fin.sidecar.name, fin.sidecar.json);
   if (fin.move) env.drive.move(fin.move);
   if (fin.moveOverride) env.drive.move(fin.moveOverride);
-  env.sheet.apply(fin.ledger);
   trace.push('finish:' + fin.status);
   return { planned, normalised, s, fin, trace };
 }

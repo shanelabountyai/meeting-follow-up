@@ -140,8 +140,16 @@ return [{ json: M.steps.plan({ cfg, listing: list.files || [], ledgerValues: led
   link('Anything to process?', 'Nothing to do', 1);
 
   // ---------------- fetch and normalise
-  ifNode('Has .match.json?', [140, -100], "={{ !!$('Plan').first().json.override }}");
-  link('Anything to process?', 'Has .match.json?', 0);
+  // Claim: move the transcript into Processing first, so a scheduled run that starts while this one (or a
+  // chained one) is mid-file cannot pick the same file (DECISIONS D-32).
+  http('Claim file', [140, -100], 'drive', {
+    method: 'PATCH',
+    url: "={{ 'https://www.googleapis.com/drive/v3/files/' + $('Plan').first().json.claim.fileId + '?supportsAllDrives=true&addParents=' + $('Plan').first().json.claim.to + '&removeParents=' + $('Plan').first().json.claim.from }}",
+    json: '={{ JSON.stringify({}) }}',
+  }, { onError: 'stopWorkflow' });
+  link('Anything to process?', 'Claim file', 0);
+  ifNode('Has .match.json?', [250, -100], "={{ !!$('Plan').first().json.override }}");
+  link('Claim file', 'Has .match.json?');
   http('Download override', [360, -200], 'drive', { url: "={{ $('Plan').first().json.override.url }}", response: { responseFormat: 'text' } });
   http('Download transcript', [580, -100], 'drive', { url: "={{ $('Plan').first().json.downloadUrl }}", response: { responseFormat: 'file' } });
   link('Has .match.json?', 'Download override', 0);
@@ -151,15 +159,17 @@ return [{ json: M.steps.plan({ cfg, listing: list.files || [], ledgerValues: led
 const cfg = $('config').first().json;
 const planned = $('Plan').first().json;
 const dl = $input.first();
-if (dl.json && dl.json.error) throw new Error('Drive download failed: ' + JSON.stringify(dl.json.error).slice(0, 300));
-const buffer = await this.helpers.getBinaryDataBuffer(0, 'data');
+const errText = (e) => String(e?.message ?? JSON.stringify(e)).slice(0, 300);
+const downloadError = dl.json && dl.json.error ? errText(dl.json.error) : null;
+const buffer = downloadError ? null : await this.helpers.getBinaryDataBuffer(0, 'data');
 let overrideJson = null;
+let overrideError = null;
 if ($('Download override').isExecuted) {
   const o = $('Download override').first().json;
-  if (o.error) throw new Error('Drive download of .match.json failed: ' + JSON.stringify(o.error).slice(0, 300));
-  overrideJson = typeof o.data === 'string' ? o.data : JSON.stringify(o.data ?? o);
+  if (o.error) overrideError = errText(o.error);
+  else overrideJson = typeof o.data === 'string' ? o.data : JSON.stringify(o.data ?? o);
 }
-return [{ json: M.steps.normalise({ cfg, planned, buffer, overrideJson, ledgerValues: $('Read ledger').first().json.values || [], prompts: PROMPTS }) }];
+return [{ json: M.steps.normalise({ cfg, planned, buffer, overrideJson, ledgerValues: $('Read ledger').first().json.values || [], prompts: PROMPTS, downloadError, overrideError }) }];
 `, { prompts: true });
   link('Download transcript', 'Normalise');
 
@@ -269,8 +279,10 @@ return [{ json: M.steps.buildDraft({ normalised: $('Normalise').first().json, va
     subject: "={{ $('Build draft').first().json.draft.subject }}",
     emailType: 'text',
     message: "={{ $('Build draft').first().json.draft.body }}",
-    options: { sendTo: "={{ $('Build draft').first().json.draft.sendTo }}" },
-  }, { credentials: CRED.gmail, ...RETRY });
+    options: { sendTo: "={{ $('Build draft').first().json.draft.sendTo }}", fromAlias: "={{ $('Build draft').first().json.draft.from }}" },
+  // No automatic retry: a create that timed out but succeeded would leave a second draft. A failure goes to
+  // Needs-Review (gmail_error) and is retried when the file is moved back (DECISIONS D-33).
+  }, { credentials: CRED.gmail, ...RETRY, retryOnFail: false, maxTries: 1 });
   link('Draft exists?', 'Update draft', 0);
   link('Draft exists?', 'Create draft', 1);
 
@@ -321,36 +333,34 @@ if (ran('Build draft')) {
 return [{ json: M.steps.finish(s) }];
 `);
   for (const [from, out] of [['Extract?', 1], ['Extracted?', 1], ['Matched?', 1], ['Draft to write?', 1], ['Update draft', 0], ['Create draft', 0]]) link(from, 'Finish', out);
-  ifNode('Sidecar?', [6520, 0], "={{ !!$('Finish').first().json.sidecar }}");
-  link('Finish', 'Sidecar?');
-  http('Upload sidecar', [6740, -100], 'drive', {
+  // Ledger first, so a failure further down cannot leave a note and draft that no row records (DECISIONS D-34).
+  http('Write ledger', [6520, 0], 'drive', {
+    method: "={{ $('Finish').first().json.ledger.method }}", url: "={{ $('Finish').first().json.ledger.url }}",
+    json: "={{ JSON.stringify($('Finish').first().json.ledger.body) }}",
+  }, { onError: 'stopWorkflow' });
+  link('Finish', 'Write ledger');
+  ifNode('Sidecar?', [6740, 0], "={{ !!$('Finish').first().json.sidecar }}");
+  link('Write ledger', 'Sidecar?');
+  http('Upload sidecar', [6960, -100], 'drive', {
     method: 'POST', url: 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true',
     raw: "={{ $('Finish').first().json.sidecar.body }}", rawType: 'multipart/related; boundary=n7-review-boundary',
   }, { onError: 'stopWorkflow' });
   link('Sidecar?', 'Upload sidecar', 0);
-  ifNode('Move?', [6960, 0], "={{ !!$('Finish').first().json.move }}");
-  link('Sidecar?', 'Move?', 1);
-  link('Upload sidecar', 'Move?');
   const move = (key) => ({
     method: 'PATCH',
     url: `={{ 'https://www.googleapis.com/drive/v3/files/' + $('Finish').first().json.${key}.fileId + '?supportsAllDrives=true&addParents=' + $('Finish').first().json.${key}.to + '&removeParents=' + $('Finish').first().json.${key}.from }}`,
     json: '={{ JSON.stringify({}) }}',
   });
-  http('Move transcript', [7180, -100], 'drive', move('move'), { onError: 'stopWorkflow' });
-  link('Move?', 'Move transcript', 0);
-  ifNode('Move .match.json?', [7400, -100], "={{ !!$('Finish').first().json.moveOverride }}");
+  http('Move transcript', [7180, 0], 'drive', move('move'), { onError: 'stopWorkflow' });
+  link('Sidecar?', 'Move transcript', 1);
+  link('Upload sidecar', 'Move transcript');
+  ifNode('Move .match.json?', [7400, 0], "={{ !!$('Finish').first().json.moveOverride }}");
   link('Move transcript', 'Move .match.json?');
-  http('Move override', [7620, -200], 'drive', move('moveOverride'), { onError: 'stopWorkflow' });
+  http('Move override', [7620, -100], 'drive', move('moveOverride'), { onError: 'stopWorkflow' });
   link('Move .match.json?', 'Move override', 0);
-  http('Write ledger', [7840, 0], 'drive', {
-    method: "={{ $('Finish').first().json.ledger.method }}", url: "={{ $('Finish').first().json.ledger.url }}",
-    json: "={{ JSON.stringify($('Finish').first().json.ledger.body) }}",
-  }, { onError: 'stopWorkflow' });
-  link('Move?', 'Write ledger', 1);
-  link('Move .match.json?', 'Write ledger', 1);
-  link('Move override', 'Write ledger');
-  ifNode('More files?', [8060, 0], "={{ $('Finish').first().json.chain === true }}");
-  link('Write ledger', 'More files?');
+  ifNode('More files?', [7840, 0], "={{ $('Finish').first().json.chain === true }}");
+  link('Move .match.json?', 'More files?', 1);
+  link('Move override', 'More files?');
   node('Process next file', 'n8n-nodes-base.executeWorkflow', 1.2, [8280, -100], {
     source: 'database', workflowId: { __rl: true, mode: 'id', value: '={{ $workflow.id }}' }, mode: 'once',
     options: { waitForSubWorkflow: false },

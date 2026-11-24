@@ -137,8 +137,13 @@ async function run(workflow, trigger, env, model, opts = {}) {
     if (t === 'n8n-nodes-base.gmail') {
       if (p.resource !== 'draft' || p.operation !== 'create') throw new Error('sim: gmail node must be draft/create');
       const ctx = { $: (n) => wrap$(n), $json: input[0].json, $workflow: workflowCtx };
-      const r = env.gmail.createDraft({ sendTo: evalExpr(p.options.sendTo, ctx), subject: evalExpr(p.subject, ctx), message: evalExpr(p.message, ctx) });
-      return [[{ json: r }]];
+      try {
+        const r = env.gmail.createDraft({ sendTo: evalExpr(p.options.sendTo, ctx), subject: evalExpr(p.subject, ctx), message: evalExpr(p.message, ctx), from: evalExpr(p.options.fromAlias, ctx) });
+        return [[{ json: r }]];
+      } catch (e) {
+        if (node.onError === 'continueRegularOutput') return [[{ json: { error: { message: e.message } } }]];
+        throw e;
+      }
     }
     if (t === 'n8n-nodes-base.executeWorkflow') {
       chained.push(evalExpr(p.workflowId.value, { $: (n) => wrap$(n), $json: input[0].json, $workflow: workflowCtx }));

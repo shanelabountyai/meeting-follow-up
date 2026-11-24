@@ -98,10 +98,11 @@ test('Code nodes inline the current src/ modules and prompt version; all compile
 
 test('retries and error path: every external call retries 3 times; API failures route to Needs-Review, not a crash', () => {
   for (const n of wf.nodes.filter((x) => x.type === 'n8n-nodes-base.httpRequest' || x.type === 'n8n-nodes-base.gmail')) {
+    if (n.name === 'Create draft') { assert.strictEqual(n.retryOnFail, false, 'a retried create could leave a second draft'); continue; }
     assert.strictEqual(n.retryOnFail, true, n.name);
     assert.strictEqual(n.maxTries, 3, n.name);
   }
-  for (const name of ['Model call', 'Reduce call', 'Search by domain', 'Create note', 'Create draft', 'Update draft']) {
+  for (const name of ['Download transcript', 'Download override', 'Model call', 'Reduce call', 'Search by domain', 'Create note', 'Create draft', 'Update draft']) {
     assert.strictEqual(wf.nodes.find((n) => n.name === name).onError, 'continueRegularOutput', name);
   }
 });
@@ -177,4 +178,37 @@ test('workflow.json offline: the error trigger writes an errors row and, when co
   assert.strictEqual(env.errors.length, 2, 'every failure is logged');
   assert.strictEqual(env.alerts.length, 1, 'second alert within 15 minutes is throttled');
   assert.match(env.alerts[0].text, /failed at "Create note"/);
+});
+
+test('workflow.json offline: a Gmail failure on Create draft sends the file to Needs-Review as gmail_error, note id kept', async () => {
+  const fx = FIXTURES[0];
+  const env = H.env([H.transcriptFile(fx)]);
+  env.gmail.createDraft = () => { throw new Error('429 rate limited'); };
+  const model = H.recordedModel([{ marker: fx.recorded.title, recorded: H.loadRecorded(fx.id) }]);
+  const r = await sim.run(testWorkflow(), 'Run manually', env, model);
+  const fin = r.outputs.get('Finish')[0].json;
+  assert.deepStrictEqual([fin.status, fin.reason], ['failed', 'gmail_error']);
+  assert.strictEqual(env.hubspot.notes.size, 1);
+  assert.strictEqual(env.sheet.values[1][7], [...env.hubspot.notes.keys()][0], 'note id recorded, so the retry updates it');
+  assert.ok(env.drive.folders['fake-needs-review'].has(`drive-${fx.id}`));
+});
+
+test('workflow.json offline: a failed transcript download routes to Needs-Review instead of blocking the queue', async () => {
+  const fx = FIXTURES[0];
+  const env = H.env([H.transcriptFile(fx)]);
+  const dl = env.drive.download;
+  env.drive.download = (id) => { if (id === `drive-${fx.id}`) throw new Error('403 forbidden'); return dl(id); };
+  const r = await sim.run(testWorkflow(), 'Run manually', env, null);
+  const fin = r.outputs.get('Finish')[0].json;
+  assert.deepStrictEqual([fin.status, fin.reason], ['review', 'unreadable']);
+  assert.ok(env.drive.folders['fake-needs-review'].has(`drive-${fx.id}`));
+});
+
+test('workflow.json offline: the ledger row is written before the file is moved', async () => {
+  const fx = FIXTURES[0];
+  const env = H.env([H.transcriptFile(fx)]);
+  const model = H.recordedModel([{ marker: fx.recorded.title, recorded: H.loadRecorded(fx.id) }]);
+  const r = await sim.run(testWorkflow(), 'Run manually', env, model);
+  assert.ok(r.order.indexOf('Write ledger') < r.order.indexOf('Move transcript'));
+  assert.ok(r.order.indexOf('Claim file') < r.order.indexOf('Download transcript'));
 });

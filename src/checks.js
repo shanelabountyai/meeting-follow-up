@@ -6,8 +6,15 @@ const N = require('./normalize');
 
 const FORBIDDEN_CHARS = /[[\]{}]/;
 const FORBIDDEN_WORDS = /\b(TBD|insert|placeholder)\b/i;
-// A link: scheme, www., or host/path. The follow-up may contain none (DECISIONS D-17).
-const URL_RE = /\b(?:https?:\/\/|www\.)[^\s<>()]+|\b[a-z0-9-]+(?:\.[a-z0-9-]+)+\/[^\s<>()]*/gi;
+// A link: scheme, www., host/path, or a bare host on a common TLD. Draft-bound text may contain none (DECISIONS D-15).
+const TLDS = 'com|net|org|io|co|ai|app|dev|info|biz|me|us|uk|de|fr|eu|ca|au|xyz|ly|link|site|online|shop|pay|money|example';
+const URL_RE = new RegExp(`\\b(?:https?:\\/\\/|www\\.)[^\\s<>()]+|\\b[a-z0-9-]+(?:\\.[a-z0-9-]+)+\\/[^\\s<>()]*|\\b[a-z0-9-]+(?:\\.[a-z0-9-]+)*\\.(?:${TLDS})\\b`, 'gi');
+
+// Every string that can reach the email draft. Links and addresses are refused in all of them; a person can add
+// real links when sending.
+function linksIn(text) {
+  return [...N.emailsIn(text), ...(String(text).match(URL_RE) || [])];
+}
 const LOW_CONFIDENCE = 0.6;
 const MAX_MISSES = 3;
 
@@ -65,15 +72,16 @@ function postChecks(input, transcript, opts = {}) {
 
   if (misses.length >= MAX_MISSES) return { ok: false, reason: 'unverified_quotes', detail: misses.join('; '), ...base };
 
-  const body = `${ex.followUp.subject}\n${ex.followUp.body}`;
   if (FORBIDDEN_CHARS.test(ex.followUp.body) || FORBIDDEN_WORDS.test(ex.followUp.body)) {
     return { ok: false, reason: 'followup_placeholder', detail: 'followUp.body contains a bracket or TBD/insert/placeholder', ...base };
   }
-  const links = [...N.emailsIn(body), ...(body.match(URL_RE) || [])];
+  // Draft-bound fields: subject is built from the title, the body appends action-item tasks and owner names.
+  const draftText = [ex.title, ex.followUp.subject, ex.followUp.body, ...ex.actionItems.map((a) => `${a.task} ${a.owner}`), ...ex.attendees.map((a) => a.name)].join('\n');
+  const links = linksIn(draftText);
   if (links.length) {
-    return { ok: false, reason: 'followup_link', detail: `follow-up contains a link or address: ${links.join(', ')}`, ...base };
+    return { ok: false, reason: 'followup_link', detail: `draft text contains a link or address: ${links.join(', ')}`, ...base };
   }
   return { ok: true, reason: lowConfidence ? 'low_confidence' : '', detail: '', ...base };
 }
 
-module.exports = { postChecks, LOW_CONFIDENCE, MAX_MISSES, domainOf, isOwn, FORBIDDEN_WORDS, FORBIDDEN_CHARS };
+module.exports = { postChecks, linksIn, URL_RE, LOW_CONFIDENCE, MAX_MISSES, domainOf, isOwn, FORBIDDEN_WORDS, FORBIDDEN_CHARS };

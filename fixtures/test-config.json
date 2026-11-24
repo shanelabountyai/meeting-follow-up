@@ -1,6 +1,7 @@
 {
   "inboxFolderId": "fake-inbox",
   "processedFolderId": "fake-processed",
+  "processingFolderId": "fake-processing",
   "needsReviewFolderId": "fake-needs-review",
   "ledgerSheetId": "fake-sheet",
   "ledgerTab": "processed",

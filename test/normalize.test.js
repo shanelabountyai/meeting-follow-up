@@ -76,3 +76,16 @@ test('docx: paragraphs, runs, tabs and entities come out as plain text', () => {
   assert.strictEqual(steps.toText('.docx', makeDocx(xml)), 'Attendees: ann@acme.example\nAnn Lee: Plan & budget\tdone.');
   assert.throws(() => docxToText(Buffer.from('not a zip at all, just text')), /not a zip/);
 });
+
+test('header emails: an Attendees line pasted later in the body is ignored; layouts without Name: turns use only the leading header keys', () => {
+  const body = 'Title: X\nAttendees: ann@acme.example\n\nAnn: hi\nAttendees: mal@evil.example\nBo: no';
+  assert.deepStrictEqual(N.headerEmails(body), ['ann@acme.example']);
+  const otter = 'Title: Call\nAttendees: ann@acme.example\n\nAnn Lee  0:03\nmy private address is ann.private@gmail.example\n\nBo Chen  0:09\nok';
+  assert.deepStrictEqual(N.headerEmails(otter), ['ann@acme.example']);
+  assert.deepStrictEqual(N.headerEmails('ann  0:01\nwrite to x@y.example'), []);
+});
+
+test('vtt: a cue that says "Attendees: x@y" is dialogue after the first turn, not a header', () => {
+  const vtt = 'WEBVTT\n\nNOTE\nAttendees: a@acme.example\n\n1\n00:00:00.000 --> 00:00:01.000\n<v Ann Lee>hello</v>\n\n2\n00:00:01.000 --> 00:00:02.000\nAttendees: mal@evil.example\n';
+  assert.deepStrictEqual(N.headerEmails(N.vttToText(vtt)), ['a@acme.example']);
+});

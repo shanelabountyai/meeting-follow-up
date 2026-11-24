@@ -84,20 +84,26 @@ function isSpeakerTurn(line) {
   return SPEAKER_RE.test(line) && !isHeaderKeyLine(line);
 }
 
-// Lines before the first speaker turn.
+// Lines before the first speaker turn. With no "Name: text" turn at all (other transcript layouts), only the
+// leading run of header-key lines (Title:, Date:, Attendees:, ...) and "# " headings counts, so dialogue is never
+// mistaken for a header.
 function headerLines(text) {
   const lines = String(text).split('\n');
   const i = lines.findIndex(isSpeakerTurn);
-  return i < 0 ? lines.slice(0, 40) : lines.slice(0, i);
+  if (i >= 0) return lines.slice(0, i);
+  const out = [];
+  for (const l of lines) {
+    if (isHeaderKeyLine(l.trim()) || /^#\s/.test(l) || (!l.trim() && out.length === 0)) out.push(l); else break;
+  }
+  return out;
 }
 
 const emailsIn = (s) => [...new Set((String(s).match(EMAIL_RE) || []).map((e) => e.toLowerCase().replace(/\.+$/, '')))];
 
-// Rule 1 source (PRD §2): emails in the header, plus any Attendees:/Participants:/Invitees: line anywhere.
+// Rule 1 source and the only recipient source (PRD §2, §1 step 7): emails in the header block. An
+// Attendees: line pasted or spoken later in the body is dialogue, not a header, and is ignored.
 function headerEmails(text) {
-  const lines = String(text).split('\n');
-  const attendeeLines = lines.filter((l) => /^(attendees|participants|invitees)\s*:/i.test(l.trim()));
-  return emailsIn([...headerLines(text), ...attendeeLines].join('\n'));
+  return emailsIn(headerLines(text).join('\n'));
 }
 
 const transcriptEmails = (text) => emailsIn(text);

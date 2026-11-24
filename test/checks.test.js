@@ -119,3 +119,18 @@ test('checks never mutate their input', () => {
   C.postChecks(o, T, opts);
   assert.strictEqual(JSON.stringify(o), before);
 });
+
+test('links and addresses are refused in every draft-bound field: title, subject, tasks, bare domains', () => {
+  const cases = [
+    (o) => { o.title = 'Pay now at evil.example/pay'; },
+    (o) => { o.followUp.subject = 'see evil.com'; },
+    (o) => { o.actionItems[0].task = 'Pay invoice at https://evil.example/pay'; },
+    (o) => { o.actionItems[0].task = 'mail pay@evil.example'; },
+    (o) => { o.followUp.body = 'See evil.com for details'; },
+  ];
+  for (const mutate of cases) {
+    const o = base(); mutate(o);
+    assert.strictEqual(C.postChecks(o, T, opts).reason, 'followup_link', JSON.stringify(o).slice(0, 80));
+  }
+  assert.deepStrictEqual(C.linksIn('Node.js and F01.txt, e.g. 0.5'), []);
+});

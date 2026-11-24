@@ -3,6 +3,9 @@
 // workflow reads word/document.xml out of the zip itself. Needs the zlib builtin in Code nodes
 // (NODE_FUNCTION_ALLOW_BUILTIN=crypto,zlib; see docs/SETUP.md).
 
+// A transcript's document.xml is far below this; a zip bomb stops here instead of exhausting memory.
+const MAX_XML_BYTES = 20 * 1024 * 1024;
+
 function findEntry(buf, wanted) {
   let eocd = -1;
   for (let i = buf.length - 22; i >= Math.max(0, buf.length - 65557); i--) {
@@ -34,7 +37,7 @@ function readZipEntry(buf, wanted, zlib) {
   const start = e.local + 30 + nlen + elen;
   const data = buf.slice(start, start + e.csize);
   if (e.method === 0) return data;
-  if (e.method === 8) return zlib.inflateRawSync(data);
+  if (e.method === 8) return zlib.inflateRawSync(data, { maxOutputLength: MAX_XML_BYTES });
   throw new Error(`docx: unsupported compression method ${e.method}`);
 }
 
@@ -45,7 +48,7 @@ function documentXmlToText(xml) {
     .replace(/<\/w:p>/g, '\n')
     .replace(/<w:t(?: [^>]*)?>([^<]*)<\/w:t>/g, '$1')
     .replace(/<[^>]+>/g, '')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&');
 }
 
 function docxToText(buf, zlib) {
