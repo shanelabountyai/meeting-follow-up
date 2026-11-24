@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/shanelabountyai/meeting-follow-up/prompts/extract.schema.json",
+  "title": "N7 meeting extraction v0.1 (PRD section 3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["title", "meetingDate", "attendees", "summary", "decisions", "actionItems", "openQuestions", "companyMentions", "dealReference", "followUp", "confidence"],
+  "properties": {
+    "title": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "meetingDate": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "email", "external"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "email": { "type": ["string", "null"] },
+          "external": { "type": "boolean" }
+        }
+      }
+    },
+    "summary": { "type": "string", "minLength": 1, "description": "3 to 6 sentences, past tense, no adjectives of quality" },
+    "decisions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "actionItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["owner", "task", "due", "quote"],
+        "properties": {
+          "owner": { "type": "string", "minLength": 1, "description": "an attendees[].name, or Unassigned" },
+          "task": { "type": "string", "minLength": 1 },
+          "due": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+          "quote": { "type": "string", "minLength": 1, "description": "the transcript words the item comes from, copied exactly" }
+        }
+      }
+    },
+    "openQuestions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "companyMentions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "dealReference": { "type": ["string", "null"], "minLength": 1 },
+    "followUp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject", "body"],
+      "properties": {
+        "subject": { "type": "string", "minLength": 1 },
+        "body": { "type": "string", "minLength": 1, "description": "at most 180 words, plain text, no placeholders" }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "actionItems"],
+      "properties": {
+        "summary": { "type": "number", "minimum": 0, "maximum": 1 },
+        "actionItems": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

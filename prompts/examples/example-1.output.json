@@ -1,0 +1,24 @@
+{
+  "title": "Quarry Lane Bakery - email list review",
+  "meetingDate": "2026-03-10",
+  "attendees": [
+    { "name": "Mara Ostby", "email": "mara@tallgrassadvisory.example", "external": false },
+    { "name": "Felix Arden", "email": "felix@quarrylanebakery.example", "external": true }
+  ],
+  "summary": "Mara Ostby and Felix Arden reviewed the bakery's email list. Felix reported that about a third of addresses bounce and that sending stopped in January. They agreed to clean the list before any new campaign. Consent records for in-shop signups were raised and not resolved.",
+  "decisions": ["Clean the list before any new campaign goes out; no sends until it is clean."],
+  "actionItems": [
+    { "owner": "Mara Ostby", "task": "Send the list cleanup plan", "due": "2026-03-13", "quote": "I'll send you the cleanup plan by Friday." },
+    { "owner": "Felix Arden", "task": "Export the current list and share it", "due": "2026-03-11", "quote": "I'll export the current list from the shop system and share it with you tomorrow." },
+    { "owner": "Unassigned", "task": "Check whether the old signup form still works", "due": null, "quote": "Someone should check whether the old signup form still works." },
+    { "owner": "Mara Ostby", "task": "Find out whether consent records are needed for in-shop signups", "due": null, "quote": "I'll find out." }
+  ],
+  "openQuestions": ["Are consent records needed for people who signed up in the shop?"],
+  "companyMentions": ["Quarry Lane Bakery"],
+  "dealReference": null,
+  "followUp": {
+    "subject": "Email list review: next steps",
+    "body": "Hi Felix,\n\nThanks for the time today. We agreed to clean the list before any new campaign, with no sends until it is clean.\n\nNext steps:\n- You: export the current list from the shop system and share it tomorrow.\n- Me: send the cleanup plan by Friday, and find out whether we need consent records for in-shop signups.\n\nWe also still need to check whether the old signup form works.\n\nBest,\nMara"
+  },
+  "confidence": { "summary": 0.9, "actionItems": 0.85 }
+}
