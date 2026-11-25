@@ -1,6 +1,6 @@
 # Next
 
-**Open: Shane reviews the draft PR (`kickoff` → `main`), confirms the decisions marked confirm in `docs/DECISIONS.md`, then does the live steps below.** Do not merge before that review.
+**Open: Shane's live steps below (import, credentials, HubSpot seed, demo, live eval).** PR #1 merged 2026-11-24; all decisions confirmed 2026-11-25.
 
 ## 2026-11-24 — kickoff build (unattended run)
 
@@ -15,7 +15,7 @@
 
 ### Shane's hand steps, in order
 
-1. **Read the PR and answer "Decisions for Shane to confirm"** (rows marked confirm in `docs/DECISIONS.md`), especially D-6 (model id string), D-23 (four credentials), D-32 (the extra `Processing` folder).
+1. ~~Answer "Decisions for Shane to confirm"~~ Done 2026-11-25: all 13 confirmed.
 2. **Import `workflow.json` into your n8n**, started with `NODE_FUNCTION_ALLOW_BUILTIN=crypto,zlib` (`docs/SETUP.md` steps 1 and 4).
 3. **Create and map the four credentials:** `google-drive-lab`, `gmail-lab`, a new least-scope `hubspot-demo` service key (companies/deals/contacts read + notes write), `anthropic-lab`. Fill in the `config` node.
 4. **Create the Drive folders and the ledger sheet** (`Meetings/Inbox`, `Processing`, `Processed`, `Needs-Review`; sheet tabs `processed` and `errors`).
